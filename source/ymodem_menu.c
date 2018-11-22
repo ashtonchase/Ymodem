@@ -46,12 +46,12 @@ uint8_t tab_1024[1024] = {0};
 uint8_t FileName[FILE_NAME_LENGTH];
 
 /* Private function prototypes -----------------------------------------------*/
-void SerialDownload(void);
+
 void SerialUpload(void);
 
 
 #warning "avoid errors"
-#define APPLICATION_ADDRESS     0x08000000
+#define APPLICATION_ADDRESS     XPAR_PS7_DDR_0_S_AXI_BASEADDR
 #define USER_FLASH_SIZE         1024
 
 /* Private functions ---------------------------------------------------------*/

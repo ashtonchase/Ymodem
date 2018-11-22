@@ -526,7 +526,7 @@ uint8_t Ymodem_Transmit (uint8_t *buf, const uint8_t* sendFileName, uint32_t siz
         }
 
         /* Wait for Ack and 'C' */
-        if (Receive_Byte(&receivedC[0], 1000000) == 0)  
+        if (Receive_Byte(&receivedC[0], 100000000) == 0)
         {
             if (receivedC[0] == ACK)
             { 

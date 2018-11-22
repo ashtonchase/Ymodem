@@ -28,28 +28,43 @@
 #ifndef __YMODEM_EXPORT_H__
 #define __YMODEM_EXPORT_H__
 
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include <assert.h>
+#include "ff.h"
+#ifdef PLATFORM_ZYNQ
+#include "xuartps.h"
+#include "xil_printf.h"
+#define UART_DEVICE_ID              XPAR_XUARTPS_1_DEVICE_ID
+#define Y_MODEM_BAUD_RATE (460800)
+#endif
+
 /********************************************************************************
  *                   The  Public APIs                                           *
  ********************************************************************************/
 void Ymodem_Main_Entrance(void);
 
-
+void logd(char * log, ...);
+void logi(char * log, ...);
+void logw(char * log, ...);
 
 /********************************************************************************
  *                   The  Porting APIs Must Be Implemented                      *
  ********************************************************************************/
-extern unsigned int     SerialKeyPressed(unsigned char *key);
-extern void             SerialPutChar(unsigned char c);
-extern unsigned char    SerialReadByte(void);
+uint32_t   SerialKeyPressed(unsigned char *key);
+void             SerialPutChar(unsigned char c);
+unsigned char    SerialReadByte(void);
 
-extern void             ymodem_init(void);
-extern unsigned int     ymodem_get_receive_maxsize(void);
-extern unsigned int     ymodem_get_transmit_size(void);
+void             ymodem_init(void);
+uint32_t    ymodem_get_receive_maxsize(void);
+uint32_t     ymodem_get_transmit_size(void);
 
 //0 - success ; -1 - fail
-extern int              ymodem_recv_start_cb(const char * filename, const unsigned int filesize);
-extern int              ymodem_recv_processing_cb(const unsigned char * buffer, const unsigned int buff_size);
-extern int              ymodem_recv_end_cb(void);
+int              ymodem_recv_start_cb(const char * filename, const uint32_t filesize);
+int              ymodem_recv_processing_cb(const uint8_t * buffer, const uint32_t buff_size);
+int              ymodem_recv_end_cb(void);
 
 #endif  /* __YMODEM_EXPORT_H__ */
 
